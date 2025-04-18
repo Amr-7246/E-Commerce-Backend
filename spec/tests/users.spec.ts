@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import insertUrlParams from 'inserturlparams';
 import { customDeepCompare } from 'jet-validators/utils';
 
-import app from '@src/server';
+import app from '@src/app';
 
 import UserRepo from '@src/repos/UserRepo';
 import User, { IUser } from '@src/models/User';
