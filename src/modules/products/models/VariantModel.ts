@@ -1,14 +1,19 @@
 import { Document, model, Schema } from "mongoose";
-interface IVariant extends Document {
-  name: string;
-  options: string[];
-}
-const variantTypeSchema = new Schema<IVariant>(
-  {
-    name: { type: String, required: true, unique: true },
-    options: [{ type: String, required: true }],
-  },
-  { timestamps: true }
-);
+
+// ? ################### Type for TS
+  interface IVariant extends Document {
+    name: string;
+    options: string[];
+  }
+// ? ################### Type for TS
+// ? ################### Data Schema with Data type But for MongoDB 
+  const variantTypeSchema = new Schema<IVariant>(
+    {
+      name: { type: String, required: false, unique: false },
+      options: [{ type: String, required: false }],
+      },
+      { timestamps: true }
+    );
+// ? ################### Data Schema with Data type But for MongoDB 
 
 export const Variant = model<IVariant>("Variant", variantTypeSchema);

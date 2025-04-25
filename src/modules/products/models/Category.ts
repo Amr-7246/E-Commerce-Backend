@@ -21,22 +21,22 @@ import { Schema, model, Document, Types } from "mongoose";
     {
       name: {
         type: String,
-        required: true,
+        required: false,
       },
       slug: {
         type: String,
-        required: true,
-        unique: true,
+        required: false,
+        unique: false,
       },
       description: String,
       image: { secure_url: String, publicId: String },
       isActive: {
         type: Boolean,
-        default: true,
+        default: false,
       },
     },
     {
-      timestamps: true,
+      timestamps: false,
     }
   );
 // ? ################### Data Schema with Data type But for MongoDB 

@@ -22,6 +22,10 @@ import { VariantRouter } from './modules/products/routes/variantsRouter';
 import { OrderRouter } from './modules/users/routes/orderRouter';
 import AppError from './util/AppError';
 import corsOptions from './config/corsOptions';
+import { signature } from './routes/cloudinarySignature';
+import { userRouter } from './modules/users/routes/userRouter';
+
+// BE Frist Step 
 
 // ~ ######################## Setup the wole app 
   const app = express();
@@ -47,9 +51,11 @@ import corsOptions from './config/corsOptions';
   // * Routing middlewares
     app.use(Paths.Base, BaseRouter);
     app.use("/products", productRouter);
+    app.use("/cloudinary_signature", signature);
     app.use("/categories", CategoryRouter);
     app.use("/variants", VariantRouter);
 
+    app.use("/user", userRouter);
     app.use("/orders", OrderRouter);
 
     app.all("*", (req: Request, res: Response, next: NextFunction) => {

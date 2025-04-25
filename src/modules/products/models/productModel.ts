@@ -17,7 +17,7 @@ import { Schema, model, Document, Types } from "mongoose";
     variants: IVariant[];
     price: number;
     discount: number;
-    category: Types.ObjectId; 
+    category: string; 
     shortDesc: string;
   }
 // ? ################### Type for TS
@@ -28,11 +28,11 @@ import { Schema, model, Document, Types } from "mongoose";
     images: {
       type: [
         {
-          secure_url: { type: String, required: true },
-          publicId: { type: String, required: true },
+          secure_url: { type: String, required: false },
+          publicId: { type: String, required: false },
         },
       ],
-      required: true,
+      required: false,
     },
     variants: [
       {
@@ -40,27 +40,27 @@ import { Schema, model, Document, Types } from "mongoose";
         images: {
           type: [
             {
-              secure_url: { type: String, required: true },
-              publicId: { type: String, required: true },
+              secure_url: { type: String, required: false },
+              publicId: { type: String, required: false },
             },
           ],
-          required: true,
+          required: false,
         },
-        price: { type: Number, required: true },
-        inventory: { type: Number, required: true },
+        price: { type: Number, required: false },
+        inventory: { type: Number, required: false },
       },
     ],
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
-    category: { type: Schema.Types.ObjectId, ref: "Category" },
+    category: { type: String },
     shortDesc: { type: String },
   });
 // ? ################### Data Schema with Data type But for MongoDB 
 // ? ################### Auto Category populate 
-  productSchema.pre(/^find/, function (next) {
-    // @ts-ignore
-    this.populate("category");
-    next();
-  });
+  // productSchema.pre(/^find/, function (next) {
+  //   // @ts-ignore
+  //   this.populate("category");
+  //   next();
+  // });
 // ? ################### Auto Category populate 
 export const Product = model<IProduct>("Product", productSchema);
