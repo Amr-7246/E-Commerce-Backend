@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteEntitiy = exports.updateEntitiy = exports.getAllEntitiy = exports.getEntitiy = exports.createEntitiy = void 0;
-const catchError_1 = require("@src/util/catchError");
-const APIFeatures_1 = __importDefault(require("@src/util/APIFeatures"));
-const AppError_1 = __importDefault(require("@src/util/AppError"));
+const catchError_1 = require("../../../utils/catchError");
+const APIFeatures_1 = __importDefault(require("../../../utils/APIFeatures"));
+const AppError_1 = __importDefault(require("../../../utils/AppError"));
 // ~ ############### CreateEntitiy
 const createEntitiy = (Model, ModelName) => (0, catchError_1.catchError)(async (req, res, next) => {
     const doc = await Model.create(req.body);

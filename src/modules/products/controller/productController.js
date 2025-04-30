@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteVariant = exports.updateVariant = exports.addNewVariant = exports.deleteProduct = exports.updateProduct = exports.getAllProducts = exports.getProduct = exports.createProduct = void 0;
-const catchError_1 = require("@src/util/catchError");
+const catchError_1 = require("../../../utils/catchError");
 const factoryController_1 = require("./factoryController");
-const AppError_1 = __importDefault(require("@src/util/AppError"));
+const AppError_1 = __importDefault(require("../../../utils/AppError"));
 const models_1 = require("../models");
 exports.createProduct = (0, factoryController_1.createEntitiy)(models_1.Product);
 exports.getProduct = (0, factoryController_1.getEntitiy)(models_1.Product);
