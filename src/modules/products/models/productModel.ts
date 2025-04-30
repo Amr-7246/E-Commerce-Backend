@@ -13,6 +13,9 @@ import { Schema, model, Document, Types } from "mongoose";
   interface IProduct extends Document {
     name: string;
     description: string;
+    recommended : {type : Boolean };
+    SellNum : {type : Number };
+    Rate : {type : Number };
     images: { secure_url: string; publicId: string }[];
     variants: IVariant[];
     price: number;
@@ -25,6 +28,9 @@ import { Schema, model, Document, Types } from "mongoose";
   const productSchema = new Schema<IProduct>({
     name: { type: String, required: true },
     description: { type: String, required: true, min: 10 },
+    recommended : {type : Boolean },
+    SellNum : {type : Number },
+    Rate : {type : Number },
     images: {
       type: [
         {
@@ -52,7 +58,11 @@ import { Schema, model, Document, Types } from "mongoose";
     ],
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
-    category: { type: String },
+    category: {
+      type: String,
+      required: true,
+      enum: [] 
+    },
     shortDesc: { type: String },
   });
 // ? ################### Data Schema with Data type But for MongoDB 

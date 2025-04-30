@@ -23,9 +23,9 @@ import bcrypt from "bcrypt";
 // ? ########### Data type for MongoDB 
   const userSchema = new Schema<IUser>(
     {
-      name: { type: String, required: true },
-      email: { type: String, required: true, unique: true },
-      password: { type: String, required: true, select: false },
+      name: { type: String, required: false },
+      email: { type: String, required: false, unique: true },
+      password: { type: String, required: false, select: false },
       createdAt: { type: Date, default: Date.now },
       passwordChangeAt: { type: Date },
       isAdmin: { type: Boolean, default: false },

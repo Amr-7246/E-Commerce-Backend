@@ -1,7 +1,9 @@
 import express from "express";
 import { login, logout, refresh, register } from "../controller/authController";
+import { createUser, getAllUsers } from "../controller/userController";
 const router = express.Router();
-// router.route(/user).get(getAllUsers).post(createNewUser)
+
+router.route('/user').get(getAllUsers).post(createUser)
 router.route("/login").post(login);
 router.route("/signup").post(register);
 router.route("/refresh").get(refresh);

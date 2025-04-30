@@ -24,6 +24,7 @@ import AppError from './util/AppError';
 import corsOptions from './config/corsOptions';
 import { signature } from './routes/cloudinarySignature';
 import { userRouter } from './modules/users/routes/userRouter';
+import { authRouter } from './modules/users/routes/authRouter';
 
 // BE Frist Step 
 
@@ -56,6 +57,7 @@ import { userRouter } from './modules/users/routes/userRouter';
     app.use("/variants", VariantRouter);
 
     app.use("/user", userRouter);
+    app.use("/auth", authRouter );
     app.use("/orders", OrderRouter);
 
     app.all("*", (req: Request, res: Response, next: NextFunction) => {
