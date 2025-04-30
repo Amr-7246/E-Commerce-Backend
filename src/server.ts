@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import app from "./app";
 dotenv.config();
 
-const DB_URI = process.env.DATABASE_URI || "";
+const DB_URI = process.env.MONGO_CONECTION_URL || "";
 mongoose
   .connect(DB_URI)
   .then(() => console.log("MongoDB Connected"))
