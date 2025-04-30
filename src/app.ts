@@ -35,7 +35,11 @@ import { authRouter } from './modules/users/routes/authRouter';
     app.use(express.json());                       // & Translator
     app.use(cookieParser());                       // & For Auth
     app.use(xss());                                // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
-    app.use(cors(corsOptions));                    // & Just allow Who have the permision 
+    // app.use(cors(corsOptions));                    // & Just allow Who have the permision 
+    app.use(cors({
+      origin: process.env.CLIENT_ORIGIN,          
+      credentials: true,
+    }));
     app.use(mongoSanitize());                      // & DB security 
     app.use(express.urlencoded({extended: true})); // & Handel Complex req
 
