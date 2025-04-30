@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { catchError } from "@src/util/catchError";
+import { catchError } from "../../../utils/catchError";
 import { getAllEntitiy, getEntitiy, createEntitiy, updateEntitiy, deleteEntitiy } from "./factoryController";
-import AppError from "@src/util/AppError";
+import AppError from "../../../utils/AppError";
 import { Product } from "../models";
 
 export const createProduct = createEntitiy(Product);

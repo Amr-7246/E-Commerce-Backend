@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { createEntitiy, deleteEntitiy, getAllEntitiy, getEntitiy, updateEntitiy } from "@src/modules/products/controller/factoryController";
+import { createEntitiy, deleteEntitiy, getAllEntitiy, getEntitiy, updateEntitiy } from "../../products/controller/factoryController";
 import mongoose from "mongoose";
 import { User } from "../models/userModel";
-import { catchError } from "@src/util/catchError";
+import { catchError } from "../../../utils/catchError";
 
 export const getAllUsers = getAllEntitiy(User);
 export const getUser = getEntitiy(User);

@@ -1,8 +1,8 @@
 import { Model, Document } from "mongoose";
 import { Request, Response, NextFunction } from "express";
-import { catchError } from "@src/util/catchError";
-import APIFeatures from "@src/util/APIFeatures";
-import AppError from "@src/util/AppError";
+import { catchError } from "../../../utils/catchError";
+import APIFeatures from "../../../utils/APIFeatures";
+import AppError from "../../../utils/AppError";
 
 // ~ ############### CreateEntitiy
   export const createEntitiy = <T extends Document>(Model: Model<T>, ModelName?: string) =>

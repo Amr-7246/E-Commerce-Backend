@@ -1,4 +1,4 @@
-import { createEntitiy, deleteEntitiy, getAllEntitiy, getEntitiy, updateEntitiy } from "@src/modules/products/controller/factoryController";
+import { createEntitiy, deleteEntitiy, getAllEntitiy, getEntitiy, updateEntitiy } from "../../products/controller/factoryController";
 import { Order } from "../models/Order";
 
 

@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction, CookieOptions } from "express";
-import { catchError } from "@src/util/catchError";
-import AppError from "@src/util/AppError";
+import { catchError } from "../../../utils/catchError";
+import AppError from "../../../utils/AppError";
 import { IUser, User } from "../models/userModel";
 
 const JWT_EXPIRES = "10m";
