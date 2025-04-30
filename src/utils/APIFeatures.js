@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// new APIFeatures(, req.query).filter().limitFields().sort().paginate();
-// This class provides utility methods for building and modifying Mongoose queries
-// based on query parameters received from the client.
 class APIFeatures {
+    // ~ Data type
+    // ~ constructor (Data)
     constructor(query, queryString) {
-        this.query = query; // The initial Mongoose query
-        this.queryString = queryString; // The client's query parameters
+        this.query = query;
+        this.queryString = queryString;
     }
-    // Filters the query based on the client's query parameters, excluding pagination and sorting parameters.
+    // ~ constructor (Data)
+    // ~ Methods (Logic)
+    // & Filters the query based on the client's query parameters, excluding pagination and sorting parameters.
     filter() {
-        const queryObj = Object.assign({}, this.queryString); // Clone the query string object
+        const queryObj = Object.assign({}, this.queryString);
         const excludeFields = ["page", "sort", "limit", "fields"]; // Fields to exclude from the filter
         // Remove excluded fields from the query object
         excludeFields.forEach((el) => delete queryObj[el]);
@@ -22,7 +23,8 @@ class APIFeatures {
         this.query = this.query.find(JSON.parse(queryStr));
         return this; // Return the instance for method chaining
     }
-    // Sorts the query based on the sort field provided by the client.
+    // & Filters the query based on the client's query parameters, excluding pagination and sorting parameters.
+    // & Sorts the query based on the sort field provided by the client.
     sort() {
         if (this.queryString.sort) {
             // Convert comma-separated sort fields into space-separated fields for Mongoose
@@ -35,7 +37,8 @@ class APIFeatures {
         }
         return this; // Return the instance for method chaining
     }
-    // Limits the fields returned in the query based on the fields parameter provided by the client.
+    // & Sorts the query based on the sort field provided by the client.
+    // & Limits the fields returned in the query based on the fields parameter provided by the client.
     limitFields() {
         if (this.queryString.fields) {
             // Convert comma-separated fields into space-separated fields for Mongoose
@@ -48,7 +51,8 @@ class APIFeatures {
         }
         return this; // Return the instance for method chaining
     }
-    // Implements pagination by skipping and limiting the number of documents returned.
+    // & Limits the fields returned in the query based on the fields parameter provided by the client.
+    // & Implements pagination by skipping and limiting the number of documents returned.
     paginate() {
         const page = this.queryString.page * 1 || 1; // Current page, default to 1
         const limit = this.queryString.limit * 1 || 100; // Documents per page, default to 100
@@ -58,7 +62,8 @@ class APIFeatures {
         return this; // Return the instance for method chaining
     }
 }
+// ~ Methods (Logic)
 exports.default = APIFeatures;
-/*Why find().find() Doesn't Execute Twice
+/* Why find().find() Doesn't Execute Twice
 When you call .find() on an existing query object, Mongoose interprets this as adding additional conditions to the query.
 It does not execute the first .find() call; instead, it merges the conditions into a single query. */
