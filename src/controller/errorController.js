@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AppError_1 = __importDefault(require("../../../utils/AppError"));
+const AppError_1 = __importDefault(require("../utils/AppError"));
 /**
  * Handles MongoDB CastErrors for invalid IDs or paths.
  * @param err - The MongoDB CastError object

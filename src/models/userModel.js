@@ -15,12 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-// ? ########### Data type for TS 
-// ? ########### Data type for MongoDB 
 const userSchema = new mongoose_1.Schema({
-    name: { type: String, required: false },
-    email: { type: String, required: false, unique: true },
-    password: { type: String, required: false, select: false },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, select: false },
     createdAt: { type: Date, default: Date.now },
     passwordChangeAt: { type: Date },
     isAdmin: { type: Boolean, default: false },
@@ -34,7 +32,6 @@ const userSchema = new mongoose_1.Schema({
     },
     cart: [{ productId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Product" }, quantity: Number }],
 }, { timestamps: true });
-// ? ########### Data type for MongoDB 
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!this.isModified("password"))

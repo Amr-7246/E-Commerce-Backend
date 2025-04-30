@@ -13,35 +13,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteEntitiy = exports.updateEntitiy = exports.getAllEntitiy = exports.getEntitiy = exports.createEntitiy = void 0;
-const catchError_1 = require("../../../utils/catchError");
-const APIFeatures_1 = __importDefault(require("../../../utils/APIFeatures"));
-const AppError_1 = __importDefault(require("../../../utils/AppError"));
-// ~ ############### CreateEntitiy
+const AppError_1 = __importDefault(require("../utils/AppError"));
+const catchError_1 = require("../utils/catchError");
+const APIFeatures_1 = __importDefault(require("../utils/APIFeatures"));
 const createEntitiy = (Model, ModelName) => (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const doc = yield Model.create(req.body);
-    res.status(200).json({ data: { doc }, message: ` You Have created ${ModelName} successfully Now ` });
+    res.status(200).json({ data: { doc }, message: `${ModelName} created successfully` });
 }));
 exports.createEntitiy = createEntitiy;
-// ~ ############### CreateEntitiy
-// ~ ############### GetEntitiy
 const getEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // /products/:id
     const { id } = req.params;
     const doc = yield Model.findById(id);
     res.status(200).json({ data: { doc } });
 }));
 exports.getEntitiy = getEntitiy;
-// ~ ############### GetEntitiy
-// ~ ############### GetAllEntitiy
 const getAllEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req);
+    // await User.find()
     const docs = yield new APIFeatures_1.default(Model.find(), req.query).paginate().filter().sort().limitFields().query;
     const totalCount = yield Model.countDocuments();
     const totalPages = Math.floor(totalCount / (req.query.limit ? +req.query.limit : 10));
     res.status(200).json({ data: { docs }, totalPages });
 }));
 exports.getAllEntitiy = getAllEntitiy;
-// ~ ############### GetAllEntitiy
-// ~ ############### UpdateEntitiy
 const updateEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const doc = yield Model.findByIdAndUpdate(id, req.body, { new: true });
@@ -50,8 +45,6 @@ const updateEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) =
     res.status(200).json({ data: { doc } });
 }));
 exports.updateEntitiy = updateEntitiy;
-// ~ ############### UpdateEntitiy
-// ~ ############### DeleteEntitiy
 const deleteEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const doc = yield Model.findByIdAndDelete(id);
@@ -60,4 +53,3 @@ const deleteEntitiy = (Model) => (0, catchError_1.catchError)((req, res, next) =
     res.status(200).json({ message: "succsessfully deleted" });
 }));
 exports.deleteEntitiy = deleteEntitiy;
-// ~ ############### DeleteEntitiy

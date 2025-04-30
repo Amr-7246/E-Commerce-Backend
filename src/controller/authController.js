@@ -14,29 +14,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logout = exports.refresh = exports.protect = exports.checkIfAdmin = exports.login = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const catchError_1 = require("../../../utils/catchError");
-const AppError_1 = __importDefault(require("../../../utils/AppError"));
+const AppError_1 = __importDefault(require("../utils/AppError"));
 const userModel_1 = require("../models/userModel");
-const JWT_EXPIRES = "10m";
-const REFRESH_TOKEN_EXPIRES = "7d";
-// ~ Generate JWT token
+const catchError_1 = require("../utils/catchError");
+const JWT_EXPIRES = "10m"; // Short-lived tokens, because who likes long waits? 😜
+const REFRESH_TOKEN_EXPIRES = "7d"; // The refresh token gets to hang out a bit longer, 7 days, lucky guy.
+// Generate JWT token
 const generateToken = (id) => {
     return jsonwebtoken_1.default.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: JWT_EXPIRES,
     });
 };
-// ~ Generate JWT token
-// ~ Cookie options
+// Cookie options
 const cookieOptions = {
-    expires: new Date(Date.now() + 3000 * 60 * 60),
+    expires: new Date(Date.now() + 3000 * 60 * 60), // 1 hour from now
     httpOnly: true,
     sameSite: "strict", // Can be 'strict', 'lax', or 'none'
     secure: process.env.NODE_ENV === "production", // Only secure cookies in production
 };
-// ~ Cookie options
-// ~ Send JWT and refresh token in the response
+// Send JWT and refresh token in the response
 const sendResponse = (res, user, code) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = generateToken(user._id); // * access token
+    const token = generateToken(user._id); //access token
     const refreshToken = jsonwebtoken_1.default.sign({ id: user._id }, process.env.REFRESH_TOKEN, {
         expiresIn: REFRESH_TOKEN_EXPIRES,
     });
@@ -49,14 +47,12 @@ const sendResponse = (res, user, code) => __awaiter(void 0, void 0, void 0, func
     user.password = undefined; // Don’t send password in the response
     res.status(code).json({ status: "success", token, data: { user } });
 });
-// ~ Send JWT and refresh token in the response
-// ~ Register handler
+// Register handler
 exports.register = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const newUser = yield userModel_1.User.create(Object.assign({}, req.body));
     sendResponse(res, newUser, 201);
 }));
-// ~ Register handler
-// ~ Login handler
+// Login handler
 exports.login = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password)
@@ -66,8 +62,6 @@ exports.login = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 
         return next(new AppError_1.default("Incorrect email or password", 401));
     sendResponse(res, user, 200);
 }));
-// ~ Login handler
-// ~ check If Admin
 exports.checkIfAdmin = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     //@ts-ignore
     const { user } = req;
@@ -94,8 +88,7 @@ exports.protect = (0, catchError_1.catchError)((req, res, next) => __awaiter(voi
     req.user = currentUser;
     next();
 }));
-// ~ Protect middleware
-// ~ Refresh token handler
+// Refresh token handler
 exports.refresh = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const refreshToken = req.cookies.jwt;
     console.log(refreshToken);
@@ -113,8 +106,7 @@ exports.refresh = (0, catchError_1.catchError)((req, res, next) => __awaiter(voi
         return res.status(200).json({ status: "success", token, data: { user: existingUser } });
     }));
 }));
-// ~ Refresh token handler
-// ~ Logout handler
+// Logout handler
 exports.logout = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.cookies.jwt) {
         return res.status(204).json({ status: "success" });
@@ -130,4 +122,3 @@ exports.logout = (0, catchError_1.catchError)((req, res, next) => __awaiter(void
     res.clearCookie("jwt", cookieOptions);
     return res.status(200).json({ status: "success" });
 }));
-// ~ Logout handler
