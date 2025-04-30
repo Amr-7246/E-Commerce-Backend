@@ -2,7 +2,7 @@
   "name": "BackEnd",
   "version": "0.0.0",
   "scripts": {
-    "build": "tsc" ,
+    "build": "tsc",
     "clean-install": "rm -rf ./node_modules && rm -r package-lock.json && npm i",
     "dev": "nodemon src/server.ts",
     "dev:hot": "nodemon --exec \"npm run dev\" --watch ./src --ext .ts",
