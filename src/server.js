@@ -7,7 +7,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
 dotenv_1.default.config();
-const DB_URI = process.env.DATABASE_URI || "";
+const DB_URI = process.env.MONGO_CONECTION_URL || "";
 mongoose_1.default
     .connect(DB_URI)
     .then(() => console.log("MongoDB Connected"))
