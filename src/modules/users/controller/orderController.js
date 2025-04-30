@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteOrder = exports.updateOrder = exports.getAllOrders = exports.getOrder = exports.createOrder = void 0;
+const factoryController_1 = require("@src/modules/products/controller/factoryController");
+const Order_1 = require("../models/Order");
+exports.createOrder = (0, factoryController_1.createEntitiy)(Order_1.Order);
+exports.getOrder = (0, factoryController_1.getEntitiy)(Order_1.Order);
+exports.getAllOrders = (0, factoryController_1.getAllEntitiy)(Order_1.Order);
+exports.updateOrder = (0, factoryController_1.updateEntitiy)(Order_1.Order);
+exports.deleteOrder = (0, factoryController_1.deleteEntitiy)(Order_1.Order);

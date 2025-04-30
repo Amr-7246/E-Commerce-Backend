@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteVariant = exports.updateVariant = exports.getAllVariants = exports.getVariant = exports.createVariant = void 0;
+const models_1 = require("../models");
+const factoryController_1 = require("./factoryController");
+exports.createVariant = (0, factoryController_1.createEntitiy)(models_1.Variant);
+exports.getVariant = (0, factoryController_1.getEntitiy)(models_1.Variant);
+exports.getAllVariants = (0, factoryController_1.getAllEntitiy)(models_1.Variant);
+exports.updateVariant = (0, factoryController_1.updateEntitiy)(models_1.Variant);
+exports.deleteVariant = (0, factoryController_1.deleteEntitiy)(models_1.Variant);

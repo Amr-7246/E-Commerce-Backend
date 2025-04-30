@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteCategory = exports.updateCategory = exports.createCategory = exports.getCategory = exports.getAllCategory = void 0;
+const models_1 = require("../models");
+const factoryController_1 = require("./factoryController");
+exports.getAllCategory = (0, factoryController_1.getAllEntitiy)(models_1.Category);
+exports.getCategory = (0, factoryController_1.getEntitiy)(models_1.Category);
+exports.createCategory = (0, factoryController_1.createEntitiy)(models_1.Category);
+exports.updateCategory = (0, factoryController_1.updateEntitiy)(models_1.Category);
+exports.deleteCategory = (0, factoryController_1.deleteEntitiy)(models_1.Category);
