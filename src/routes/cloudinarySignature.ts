@@ -1,5 +1,5 @@
 import express from "express";
-import { GetSignature } from "@src/services/GetSignature";
+import { GetSignature } from "../controller/GetSignature";
 
 const router = express.Router(); 
 router.get("/", GetSignature);

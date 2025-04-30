@@ -1,12 +1,36 @@
-import logger from 'jet-logger';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import app from "./app";
+dotenv.config();
 
-import ENV from '@src/constants/ENV';
-import app from './app';
-import connectDB from './config/db';
+const DB_URI = process.env.DATABASE_URI || "";
+mongoose
+  .connect(DB_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
+const port = process.env.PORT || 3000;
+const server = app.listen(port);
+// async function triggerUnhandledRejection() {
+//   try {
+//     throw new Error("This is an unhandled rejection using async/await!");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
-const SERVER_START_MSG = ('Ok Amr, Your server started without any errors on port: ' + ENV.Port.toString());
+// triggerUnhandledRejection();
+// No try-catch or `.catch()` to handle the rejection, triggering the event.
 
+/*
+The process object in Node.js is a global object that provides information about and control over the current Node.js process.
+The .on() method is used to attach a listener to a specific event emitted by the process. 
+this case, the event is "unhandledRejection", and the listener is a function that will handle the event.
+ */
 
-connectDB().then(() => {
-    app.listen(ENV.Port, () => logger.info(SERVER_START_MSG));
-})
+process.on("unhandledRejection", (err: any) => {
+  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
