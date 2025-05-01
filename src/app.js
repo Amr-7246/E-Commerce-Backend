@@ -24,13 +24,15 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json()); // & Translator
 app.use((0, cookie_parser_1.default)()); // & For Auth
 app.use((0, xss_clean_1.default)()); // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
-app.use((0, cors_1.default)({
-    origin: process.env.CLIENT_ORIGIN,
+const corsOptions = {
+    origin: ['http://localhost:5000', 'https://e-commerce-nu-six-55.vercel.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
-}));
+};
+app.use((0, cors_1.default)(corsOptions)); // & allow any frontend req (Not secure I know but it just a project for my portfolio )
 app.use((0, express_mongo_sanitize_1.default)()); // & DB security 
 app.use(express_1.default.urlencoded({ extended: true })); // & Handel Complex req
-// app.use(morgan('dev'));                        // & API req logs
+// app.use(morgan('dev'));                     // & API req logs
 app.use((0, helmet_1.default)()); // & security 
 // * Global middlewares
 // * Routing middlewares

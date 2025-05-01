@@ -23,13 +23,15 @@ import AppError from './utils/AppError';
     app.use(express.json());                       // & Translator
     app.use(cookieParser());                       // & For Auth
     app.use(xss());                                // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
-    app.use(cors({                                 // & Just allow Who have the permision 
-      origin: process.env.CLIENT_ORIGIN,           
-      credentials: true,
-    }));
+    const corsOptions = {
+      origin: ['http://localhost:5000', 'https://e-commerce-nu-six-55.vercel.app'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      credentials: true,  
+    };
+    app.use(cors(corsOptions));                    // & allow any frontend req (Not secure I know but it just a project for my portfolio )
     app.use(mongoSanitize());                      // & DB security 
     app.use(express.urlencoded({extended: true})); // & Handel Complex req
-    // app.use(morgan('dev'));                        // & API req logs
+    // app.use(morgan('dev'));                     // & API req logs
     app.use(helmet());                             // & security 
   // * Global middlewares
 
