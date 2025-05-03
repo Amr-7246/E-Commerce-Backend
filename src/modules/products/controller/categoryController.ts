@@ -4,5 +4,5 @@ import { createEntitiy, deleteEntitiy, getAllEntitiy, getEntitiy, updateEntitiy 
 export const getAllCategory = getAllEntitiy(Category);
 export const getCategory = getEntitiy(Category);
 export const createCategory = createEntitiy(Category);
-export const updateCategory = updateEntitiy(Category);
+export const updateCategory: ReturnType<typeof updateEntitiy> = updateEntitiy(Category);
 export const deleteCategory = deleteEntitiy(Category);

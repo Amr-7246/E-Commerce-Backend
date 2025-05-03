@@ -26,17 +26,17 @@ import { Schema, model, Document, Types } from "mongoose";
       slug: {
         type: String,
         required: false,
-        unique: false,
+        unique: true ,
       },
       description: String,
       image: { secure_url: String, publicId: String },
       isActive: {
         type: Boolean,
-        default: false,
+        default: true ,
       },
     },
     {
-      timestamps: false,
+      timestamps: true ,
     }
   );
 // ? ################### Data Schema with Data type But for MongoDB 

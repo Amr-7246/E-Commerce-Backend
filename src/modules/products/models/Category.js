@@ -12,16 +12,16 @@ const categorySchema = new mongoose_1.Schema({
     slug: {
         type: String,
         required: false,
-        unique: false,
+        unique: true,
     },
     description: String,
     image: { secure_url: String, publicId: String },
     isActive: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 }, {
-    timestamps: false,
+    timestamps: true,
 });
 // ? ################### Data Schema with Data type But for MongoDB 
 exports.Category = (0, mongoose_1.model)("Category", categorySchema);

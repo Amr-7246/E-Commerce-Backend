@@ -20,8 +20,9 @@ import { Schema, model, Document, Types } from "mongoose";
     variants: IVariant[];
     price: number;
     discount: number;
-    category: string; 
+    category: Types.ObjectId; 
     shortDesc: string;
+    inventory: number;
   }
 // ? ################### Type for TS
 // ? ################### Data Schema with Data type But for MongoDB 
@@ -58,19 +59,20 @@ import { Schema, model, Document, Types } from "mongoose";
     ],
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
-    category: {
-      type: String,
+    category:{
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      enum: [] 
     },
     shortDesc: { type: String },
+    inventory: { type: Number, required: false }
   });
 // ? ################### Data Schema with Data type But for MongoDB 
 // ? ################### Auto Category populate 
-  // productSchema.pre(/^find/, function (next) {
-  //   // @ts-ignore
-  //   this.populate("category");
-  //   next();
-  // });
+  productSchema.pre(/^find/, function (next) {
+    // @ts-ignore
+    this.populate("category");
+    next();
+  });
 // ? ################### Auto Category populate 
 export const Product = model<IProduct>("Product", productSchema);

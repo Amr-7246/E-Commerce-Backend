@@ -8,5 +8,5 @@ const express_1 = __importDefault(require("express"));
 const categoryController_1 = require("../controller/categoryController");
 const router = express_1.default.Router();
 router.route("/").get(categoryController_1.getAllCategory).post(categoryController_1.createCategory);
-router.route("/").get(categoryController_1.getCategory).patch(categoryController_1.updateCategory).delete(categoryController_1.deleteCategory);
+router.route("/:id").get(categoryController_1.getCategory).patch(categoryController_1.updateCategory).delete(categoryController_1.deleteCategory);
 exports.CategoryRouter = router;

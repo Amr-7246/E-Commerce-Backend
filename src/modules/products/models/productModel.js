@@ -38,18 +38,18 @@ const productSchema = new mongoose_1.Schema({
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
     category: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Category",
         required: true,
-        enum: []
     },
     shortDesc: { type: String },
 });
 // ? ################### Data Schema with Data type But for MongoDB 
 // ? ################### Auto Category populate 
-// productSchema.pre(/^find/, function (next) {
-//   // @ts-ignore
-//   this.populate("category");
-//   next();
-// });
+productSchema.pre(/^find/, function (next) {
+    // @ts-ignore
+    this.populate("category");
+    next();
+});
 // ? ################### Auto Category populate 
 exports.Product = (0, mongoose_1.model)("Product", productSchema);

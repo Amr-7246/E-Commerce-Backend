@@ -24,8 +24,8 @@ import AppError from './utils/AppError';
     app.use(cookieParser());                       // & For Auth
     app.use(xss());                                // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
     const corsOptions = {
-      origin: ['http://localhost:5000', 'https://e-commerce-nu-six-55.vercel.app'],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      origin: ['http://localhost:3000', 'https://e-commerce-nu-six-55.vercel.app'],
+      methods: ['GET', 'POST', 'PUT' , 'PATCH' , 'DELETE'],
       credentials: true,  
     };
     app.use(cors(corsOptions));                    // & allow any frontend req (Not secure I know but it just a project for my portfolio )

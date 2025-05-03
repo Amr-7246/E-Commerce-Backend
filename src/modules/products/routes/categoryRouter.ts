@@ -9,6 +9,6 @@ import {
 const router = express.Router();
 
 router.route("/").get(getAllCategory).post(createCategory);
-router.route("/").get(getCategory).patch(updateCategory).delete(deleteCategory);
+router.route("/:id").get(getCategory).patch(updateCategory).delete(deleteCategory);
 
 export const CategoryRouter = router;
