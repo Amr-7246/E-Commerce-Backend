@@ -43,6 +43,7 @@ const productSchema = new mongoose_1.Schema({
         required: true,
     },
     shortDesc: { type: String },
+    inventory: { type: Number, required: false }
 });
 // ? ################### Data Schema with Data type But for MongoDB 
 // ? ################### Auto Category populate 
