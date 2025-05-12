@@ -5,7 +5,12 @@ const mongoose_1 = require("mongoose");
 // ? ########### Data type for TS 
 // ? ########### Data type for MongoDB 
 const orderSchema = new mongoose_1.Schema({
-    customer: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: false },
+    customer: {
+        name: { type: String, required: false },
+        email: { type: String, required: false },
+        phone: { type: Number, required: false },
+        address: { type: String, required: false },
+    },
     items: [
         {
             product: { type: mongoose_1.Schema.Types.ObjectId, ref: "Product", required: false },

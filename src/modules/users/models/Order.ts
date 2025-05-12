@@ -15,7 +15,12 @@ import { Schema, model, Document, Types } from "mongoose";
   }
 
   interface IOrder extends Document {
-    customer: Types.ObjectId;
+    customer: {
+      name: string;
+      email: string;
+      phone: number;
+      address: string;
+    };
     seller: Types.ObjectId;
     items: IOrderItem[];
     totalAmount: number;
@@ -28,7 +33,12 @@ import { Schema, model, Document, Types } from "mongoose";
 // ? ########### Data type for MongoDB 
   const orderSchema = new Schema<IOrder>(
     {
-      customer: { type: Schema.Types.ObjectId, ref: "User", required: false },
+      customer: {
+        name: { type: String, required: false },
+        email: { type: String, required: false },
+        phone: { type: Number, required: false },
+        address: { type: String, required: false },
+      },
       items: [
         {
           product: { type: Schema.Types.ObjectId, ref: "Product", required: false },
