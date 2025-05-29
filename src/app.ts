@@ -15,6 +15,12 @@ import { signature } from './routes/cloudinarySignature';
 import { userRouter } from './modules/users/routes/userRouter';
 import { authRouter } from './modules/users/routes/authRouter';
 import AppError from './utils/AppError';
+import { setupGraphQLServer } from './graphql/server';
+import { studentsRouter } from './Educaion_Hub/modules/students/routes/studentsRoutes';
+import { teachersRouter } from './Educaion_Hub/modules/teachers/routes/teachersRoutes';
+import { coursesRouter } from './Educaion_Hub/modules/courses/routes/coursesRoutes';
+import { formBlueprintRouter } from './Forms_App/routes/formBlueprint';
+import { formDataRouter } from './Forms_App/routes/formDataRoute';
 
 // ~ ######################## Setup the wole app 
   const app = express();
@@ -34,20 +40,30 @@ import AppError from './utils/AppError';
     // app.use(morgan('dev'));                     // & API req logs
     app.use(helmet());                             // & security 
   // * Global middlewares
-
-  // * Routing middlewares
+  
+  // * Routing middlewares For E-cmmerce App
     app.use("/products", productRouter);
     app.use("/cloudinary_signature", signature);
     app.use("/categories", CategoryRouter);
     app.use("/variants", VariantRouter);
-
     app.use("/user", userRouter);
     app.use("/auth", authRouter );
     app.use("/orders", OrderRouter);
+  // * Routing middlewares For E-cmmerce App 
+
+  // * Routing middlewares For Education-Hub App
+    app.use("/courses", coursesRouter);
+    app.use("/students", studentsRouter);
+    app.use("/teachers", teachersRouter);
+  // * Routing middlewares For Education-Hub App
+  // * Routing middlewares For Forms App
+    app.use("/forms/blueprint", formBlueprintRouter);
+    app.use("/forms/data", formDataRouter);
+  // * Routing middlewares For Forms App
+
 
     app.all("*", (req: Request, res: Response, next: NextFunction) => {
-      next(new AppError(`Sory pro, But We Can't find ${req.originalUrl} on this server`, 404));
+      next(new AppError(`Sorry pro, But We Can't find ${req.originalUrl} on this server`, 404));
     });
-  // * Routing middlewares
 // ~ ######################## Setup the wole app 
 export default app;

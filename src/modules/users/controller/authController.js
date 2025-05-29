@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -35,7 +26,7 @@ const cookieOptions = {
 };
 // ~ Cookie options
 // ~ Send JWT and refresh token in the response
-const sendResponse = (res, user, code) => __awaiter(void 0, void 0, void 0, function* () {
+const sendResponse = async (res, user, code) => {
     const token = generateToken(user._id); // * access token
     const refreshToken = jsonwebtoken_1.default.sign({ id: user._id }, process.env.REFRESH_TOKEN, {
         expiresIn: REFRESH_TOKEN_EXPIRES,
@@ -43,32 +34,32 @@ const sendResponse = (res, user, code) => __awaiter(void 0, void 0, void 0, func
     if (process.env.NODE_ENV === "production")
         cookieOptions.secure = true;
     // Update user with refresh token
-    const updated = yield userModel_1.User.findByIdAndUpdate(user._id, { refreshToken });
+    const updated = await userModel_1.User.findByIdAndUpdate(user._id, { refreshToken });
     console.log(updated, "Updated");
     res.cookie("jwt", refreshToken, cookieOptions);
     user.password = undefined; // Don’t send password in the response
     res.status(code).json({ status: "success", token, data: { user } });
-});
+};
 // ~ Send JWT and refresh token in the response
 // ~ Register handler
-exports.register = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield userModel_1.User.create(Object.assign({}, req.body));
+exports.register = (0, catchError_1.catchError)(async (req, res, next) => {
+    const newUser = await userModel_1.User.create(Object.assign({}, req.body));
     sendResponse(res, newUser, 201);
-}));
+});
 // ~ Register handler
 // ~ Login handler
-exports.login = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.login = (0, catchError_1.catchError)(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password)
         return next(new AppError_1.default("Please provide email and password", 400));
-    const user = yield userModel_1.User.findOne({ email }).select("+password");
-    if (!user || !(yield user.comparePassword(password)))
+    const user = await userModel_1.User.findOne({ email }).select("+password");
+    if (!user || !(await user.comparePassword(password)))
         return next(new AppError_1.default("Incorrect email or password", 401));
     sendResponse(res, user, 200);
-}));
+});
 // ~ Login handler
 // ~ check If Admin
-exports.checkIfAdmin = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.checkIfAdmin = (0, catchError_1.catchError)(async (req, res, next) => {
     //@ts-ignore
     const { user } = req;
     console.log(user);
@@ -76,8 +67,8 @@ exports.checkIfAdmin = (0, catchError_1.catchError)((req, res, next) => __awaite
         return next(new AppError_1.default("You are not an admin", 403));
     else
         next();
-}));
-exports.protect = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.protect = (0, catchError_1.catchError)(async (req, res, next) => {
     let token = "";
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         token = req.headers.authorization.split(" ")[1];
@@ -86,48 +77,48 @@ exports.protect = (0, catchError_1.catchError)((req, res, next) => __awaiter(voi
         return next(new AppError_1.default("You are not logged in. Please log in to get access", 401));
     console.log(token);
     const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-    const currentUser = yield userModel_1.User.findById(decoded.id);
+    const currentUser = await userModel_1.User.findById(decoded.id);
     console.log(decoded);
     if (!currentUser)
         return next(new AppError_1.default("The user belonging to this token does no longer exist", 401));
     //@ts-ignore
     req.user = currentUser;
     next();
-}));
+});
 // ~ Protect middleware
 // ~ Refresh token handler
-exports.refresh = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.refresh = (0, catchError_1.catchError)(async (req, res, next) => {
     const refreshToken = req.cookies.jwt;
     console.log(refreshToken);
     if (!refreshToken)
         return next(new AppError_1.default("You are not logged in. Please log in to get access", 401));
-    jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
+    jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
         if (err)
             return next(new AppError_1.default("Refresh token is not valid", 403));
         console.log(decoded);
-        const existingUser = yield userModel_1.User.findById(decoded.id);
+        const existingUser = await userModel_1.User.findById(decoded.id);
         console.log(existingUser);
         if (!existingUser)
             return next(new AppError_1.default("Refresh token is not valid", 403));
         const token = generateToken(existingUser._id);
         return res.status(200).json({ status: "success", token, data: { user: existingUser } });
-    }));
-}));
+    });
+});
 // ~ Refresh token handler
 // ~ Logout handler
-exports.logout = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.logout = (0, catchError_1.catchError)(async (req, res, next) => {
     if (!req.cookies.jwt) {
         return res.status(204).json({ status: "success" });
     }
     const refreshToken = req.cookies.jwt;
-    const user = yield userModel_1.User.findOne({ refreshToken });
+    const user = await userModel_1.User.findOne({ refreshToken });
     if (!user) {
         res.clearCookie("jwt", cookieOptions);
         return res.status(204).json({ status: "success" });
     }
     user.refreshToken = "";
-    yield user.save();
+    await user.save();
     res.clearCookie("jwt", cookieOptions);
     return res.status(200).json({ status: "success" });
-}));
+});
 // ~ Logout handler

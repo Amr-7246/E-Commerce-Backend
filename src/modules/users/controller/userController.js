@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -23,7 +14,7 @@ exports.createUser = (0, factoryController_1.createEntitiy)(userModel_1.User);
 exports.updateUser = (0, factoryController_1.updateEntitiy)(userModel_1.User);
 exports.deleteUser = (0, factoryController_1.deleteEntitiy)(userModel_1.User);
 // ~ Handel user cart (addToCart) 
-exports.addToCart = (0, catchError_1.catchError)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.addToCart = (0, catchError_1.catchError)(async (req, res, next) => {
     const user = req.user;
     const { productId, newCount } = req.body;
     console.log(user, productId);
@@ -34,13 +25,13 @@ exports.addToCart = (0, catchError_1.catchError)((req, res, next) => __awaiter(v
     else {
         user.cart.push({ productId: new mongoose_1.default.Types.ObjectId(productId), quantity: 1 });
     }
-    yield user.save();
+    await user.save();
     res.status(200).json({ data: { user: user }, status: "success", message: "Product added to cart" });
-}));
+});
 // ~ Handel user cart (addToCart) 
 // ~ Handel user cart (removeFromCart) 
 //@ts-ignore
-exports.removeFromCart = (0, catchError_1.catchError)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.removeFromCart = (0, catchError_1.catchError)(async (req, res) => {
     const user = req.user;
     const { productId, newCount } = req.body;
     const cartItem = user.cart.find((c) => c.productId.toString() === productId);
@@ -53,7 +44,7 @@ exports.removeFromCart = (0, catchError_1.catchError)((req, res) => __awaiter(vo
     else {
         user.cart = user.cart.filter((c) => c.productId.toString() !== productId);
     }
-    yield user.save();
+    await user.save();
     res.status(200).json({ data: { user }, status: "success", message: "Product removed from cart" });
-}));
+});
 // ~ Handel user cart (removeFromCart) 

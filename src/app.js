@@ -18,6 +18,11 @@ const cloudinarySignature_1 = require("./routes/cloudinarySignature");
 const userRouter_1 = require("./modules/users/routes/userRouter");
 const authRouter_1 = require("./modules/users/routes/authRouter");
 const AppError_1 = __importDefault(require("./utils/AppError"));
+const studentsRoutes_1 = require("./Educaion_Hub/modules/students/routes/studentsRoutes");
+const teachersRoutes_1 = require("./Educaion_Hub/modules/teachers/routes/teachersRoutes");
+const coursesRoutes_1 = require("./Educaion_Hub/modules/courses/routes/coursesRoutes");
+const formBlueprint_1 = require("./Forms_App/routes/formBlueprint");
+const formDataRoute_1 = require("./Forms_App/routes/formDataRoute");
 // ~ ######################## Setup the wole app 
 const app = (0, express_1.default)();
 // * Global middlewares
@@ -35,7 +40,7 @@ app.use(express_1.default.urlencoded({ extended: true })); // & Handel Complex r
 // app.use(morgan('dev'));                     // & API req logs
 app.use((0, helmet_1.default)()); // & security 
 // * Global middlewares
-// * Routing middlewares
+// * Routing middlewares For E-cmmerce App
 app.use("/products", productRouter_1.productRouter);
 app.use("/cloudinary_signature", cloudinarySignature_1.signature);
 app.use("/categories", categoryRouter_1.CategoryRouter);
@@ -43,9 +48,18 @@ app.use("/variants", variantsRouter_1.VariantRouter);
 app.use("/user", userRouter_1.userRouter);
 app.use("/auth", authRouter_1.authRouter);
 app.use("/orders", orderRouter_1.OrderRouter);
+// * Routing middlewares For E-cmmerce App 
+// * Routing middlewares For Education-Hub App
+app.use("/courses", coursesRoutes_1.coursesRouter);
+app.use("/students", studentsRoutes_1.studentsRouter);
+app.use("/teachers", teachersRoutes_1.teachersRouter);
+// * Routing middlewares For Education-Hub App
+// * Routing middlewares For Forms App
+app.use("/forms/blueprint", formBlueprint_1.formBlueprintRouter);
+app.use("/forms/data", formDataRoute_1.formDataRouter);
+// * Routing middlewares For Forms App
 app.all("*", (req, res, next) => {
-    next(new AppError_1.default(`Sory pro, But We Can't find ${req.originalUrl} on this server`, 404));
+    next(new AppError_1.default(`Sorry pro, But We Can't find ${req.originalUrl} on this server`, 404));
 });
-// * Routing middlewares
 // ~ ######################## Setup the wole app 
 exports.default = app;
