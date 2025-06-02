@@ -50,7 +50,7 @@ const CourseSchema = new mongoose_1.Schema({
     },
     language: { type: String, default: 'English' },
     category: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: "Category",
         required: false,
     },

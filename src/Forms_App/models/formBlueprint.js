@@ -9,7 +9,7 @@ const FormBlueprint = new mongoose_1.Schema({
             type: {
                 type: String,
                 required: true,
-                enum: ['text', 'email', 'number', 'date', 'select', 'checkbox', 'radio']
+                enum: ['text', 'textarea', 'email', 'number', 'date', 'select', 'checkbox', 'radio']
             },
             title: { type: String, required: true, trim: true },
             placeholder: { type: String, required: true, trim: true },
