@@ -30,7 +30,7 @@ import { formDataRouter } from './Forms_App/routes/formDataRoute';
     app.use(cookieParser());                       // & For Auth
     app.use(xss());                                // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
     const corsOptions = {
-      origin: ['http://localhost:3000', 'https://e-commerce-nu-six-55.vercel.app'],
+      origin: ['http://localhost:3000', 'https://e-commerce-nu-six-55.vercel.app' ,'https://dynamic-forms-theta.vercel.app/' ],
       methods: ['GET', 'POST', 'PUT' , 'PATCH' , 'DELETE'],
       credentials: true,  
     };
