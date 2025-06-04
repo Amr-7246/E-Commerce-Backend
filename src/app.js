@@ -23,6 +23,7 @@ const teachersRoutes_1 = require("./Educaion_Hub/modules/teachers/routes/teacher
 const coursesRoutes_1 = require("./Educaion_Hub/modules/courses/routes/coursesRoutes");
 const formBlueprint_1 = require("./Forms_App/routes/formBlueprint");
 const formDataRoute_1 = require("./Forms_App/routes/formDataRoute");
+const bookingRoutes_1 = require("./microServices/Booking_System/routes/bookingRoutes");
 // ~ ######################## Setup the wole app 
 const app = (0, express_1.default)();
 // * Global middlewares
@@ -30,7 +31,7 @@ app.use(express_1.default.json()); // & Translator
 app.use((0, cookie_parser_1.default)()); // & For Auth
 app.use((0, xss_clean_1.default)()); // & Protects against Cross-Site Scripting (XSS) attacks and prevent injection of malicious scripts.
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://e-commerce-nu-six-55.vercel.app', 'https://dynamic-forms-theta.vercel.app/'],
+    origin: ['http://localhost:3000', 'https://e-commerce-nu-six-55.vercel.app', 'https://dynamic-forms-theta.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
 };
@@ -58,6 +59,9 @@ app.use("/teachers", teachersRoutes_1.teachersRouter);
 app.use("/forms/blueprint", formBlueprint_1.formBlueprintRouter);
 app.use("/forms/data", formDataRoute_1.formDataRouter);
 // * Routing middlewares For Forms App
+// * Routing middlewares For Booking System
+app.use("/book", bookingRoutes_1.bookingRouter);
+// * Routing middlewares For Booking System
 app.all("*", (req, res, next) => {
     next(new AppError_1.default(`Sorry pro, But We Can't find ${req.originalUrl} on this server`, 404));
 });

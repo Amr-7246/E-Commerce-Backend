@@ -21,6 +21,7 @@ import { teachersRouter } from './Educaion_Hub/modules/teachers/routes/teachersR
 import { coursesRouter } from './Educaion_Hub/modules/courses/routes/coursesRoutes';
 import { formBlueprintRouter } from './Forms_App/routes/formBlueprint';
 import { formDataRouter } from './Forms_App/routes/formDataRoute';
+import { bookingRouter } from './microServices/Booking_System/routes/bookingRoutes';
 
 // ~ ######################## Setup the wole app 
   const app = express();
@@ -60,6 +61,9 @@ import { formDataRouter } from './Forms_App/routes/formDataRoute';
     app.use("/forms/blueprint", formBlueprintRouter);
     app.use("/forms/data", formDataRouter);
   // * Routing middlewares For Forms App
+  // * Routing middlewares For Booking System
+    app.use("/book", bookingRouter);
+  // * Routing middlewares For Booking System
 
 
     app.all("*", (req: Request, res: Response, next: NextFunction) => {
